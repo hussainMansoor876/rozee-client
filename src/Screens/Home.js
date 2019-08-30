@@ -8,7 +8,7 @@ class Home extends React.Component {
   render(){
     return(
       <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'ceenter' }}>
-          <h1>Wellcome to regionalHeute.de</h1>
+          <h1>Wellcome to IT International</h1>
       </div>
     )
   }
