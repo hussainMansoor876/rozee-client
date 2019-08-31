@@ -1,6 +1,8 @@
 import React from 'react';
 import { BrowserRouter as Router, Route } from "react-router-dom";
-import { Login, SignUp, Home } from '../Screens'
+import Login from '../Components/Login/Login';
+import SignUp from '../Components/SignUp/SignUp';
+import Home from '../Components/Home/Home'
 
 
 const Routes = () => (

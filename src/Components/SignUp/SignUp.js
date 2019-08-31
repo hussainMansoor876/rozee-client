@@ -1,5 +1,5 @@
 import React from 'react';
-import './Login.css'
+import '../Login/Login.css'
 import 'antd/dist/antd.css';
 import { Form, Icon, Input, Button, Checkbox, notification } from 'antd';
 import { Link } from 'react-router-dom'
