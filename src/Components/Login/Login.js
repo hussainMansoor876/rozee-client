@@ -1,3 +1,5 @@
+/*eslint-disable*/
+
 import React from 'react';
 import './Login.css'
 import 'antd/dist/antd.css';
