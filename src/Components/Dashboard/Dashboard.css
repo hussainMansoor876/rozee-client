@@ -1,6 +1,6 @@
-@charset "UTF-8";
-@import url(https://fonts.googleapis.com/css?family=Open+Sans:300,400,700,400italic);
-@import url(https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.min.css);
+/* @charset "UTF-8"; */
+/* @import url(https://fonts.googleapis.com/css?family=Open+Sans:300,400,700,400italic);
+@import url(https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.min.css); */
 html {
   box-sizing: border-box;
 }
@@ -143,7 +143,9 @@ a {
   color: inherit;
 }
 
-h2,
+/* HEADINGS */
+
+/* h2,
 h3,
 h4 {
   font-weight: 300;
@@ -156,14 +158,14 @@ h2 {
 
 b {
   color: lightsalmon;
-}
+} */
 
 .hint {
   color: lightslategray;
 }
 
-/* lists */
-ul, li {
+/* LISTS */
+/* ul, li {
   list-style-type: none;
   margin: 0;
   padding: 0;
@@ -184,7 +186,7 @@ main li:before {
   border-left: solid 10px #dde;
   border-top: solid 5px transparent;
   border-bottom: solid 5px transparent;
-}
+} */
 
 /* forms */
 form input, form textarea, form select {
@@ -206,6 +208,7 @@ form label, form legend {
   display: block;
   margin: 1em 0 .5em;
 }
+
 form input[type=submit] {
   background: turquoise;
   border: none;

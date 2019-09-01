@@ -1,16 +1,20 @@
 /*eslint-disable*/
 import React from 'react';
-import './Home.css'
+import './Dashboard.css'
+import InfoCard from '../InfoCard/InfoCard';
+import SessionStorageManager from '../../Config/SessionStorageManager';
 
-class Home extends React.Component {
+class Dashboard extends React.Component {
   render() {
+
+    const user = SessionStorageManager.getUser()
     return (
       <div >
         <div>
           <header role="banner">
             <h1>Admin Panel</h1>
             <ul className="utilities">
-              <li className="users"><a href="#">My Account</a></li>
+              <li className="users"><a href="#">{user.fullName}</a></li>
               <li className="logout warn"><a href>Log Out</a></li>
             </ul>
           </header>
@@ -24,7 +28,19 @@ class Home extends React.Component {
             </ul>
           </nav>
           <main role="main">
-            <section className="panel important">
+          <InfoCard title="Welcome to your dashboard" active items={[
+              {
+                desc: "New Jobs"
+              },
+              {
+                desc: "Lorem ipsum dolor sit amet, consectetuer adipiscing elit."
+              },
+              {
+                desc: "Aliquam tincidunt mauris eu risus."
+              }
+            ]} />
+
+            {/* <section className="panel important">
               <h2>Welcome to Your Dashboard </h2>
               <ul>
                 <li>Important panel that will always be really wide Lorem ipsum dolor sit amet, consectetuer adipiscing
@@ -32,23 +48,21 @@ class Home extends React.Component {
                 <li>Aliquam tincidunt mauris eu risus.</li>
                 <li>Vestibulum auctor dapibus neque.</li>
               </ul>
-            </section>
-            <section className="panel">
-              <h2>Posts</h2>
-              <ul>
-                <li><b>2458 </b>Published Posts</li>
-                <li><b>18</b> Drafts.</li>
-                <li>Most popular post: <b>This is a post title</b>.</li>
-              </ul>
-            </section>
-            <section className="panel">
-              <h2>Chart</h2>
-              <ul>
-                <li>Lorem ipsum dolor sit amet, consectetuer adipiscing elit.</li>
-                <li>Aliquam tincidunt mauris eu risus.</li>
-                <li>Vestibulum auctor dapibus neque.</li>
-              </ul>
-            </section>
+            </section> */}
+            <InfoCard title="Jobs" items={[{ imp: "100", desc: "New Jobs" }]} />
+            <InfoCard title="Chart" items={[
+              {
+                desc: "New Jobs"
+              },
+              {
+                desc: "Lorem ipsum dolor sit amet, consectetuer adipiscing elit."
+              },
+              {
+                desc: "Aliquam tincidunt mauris eu risus."
+              }
+            ]} />
+
+          
             <section className="panel important">
               <h2>Write a post</h2>
               <form action="#">
@@ -58,7 +72,7 @@ class Home extends React.Component {
                   <label htmlFor="textarea">Textarea:</label>
                   <textarea cols={40} rows={8} name="textarea" id="textarea" defaultValue={""} />
                 </div>
-                <div className="onethird">
+                {/* <div className="onethird">
                   <legend>Radio Button Choice</legend>
                   <label htmlFor="radio-choice-1">
                     <input type="radio" name="radio-choice" id="radio-choice-1" defaultValue="choice-1" /> Choice 1
@@ -80,7 +94,7 @@ class Home extends React.Component {
                   <div>
                     <input type="submit" defaultValue="Submit" />
                   </div>
-                </div>
+                </div> */}
               </form>
             </section>
             <section className="panel">
@@ -97,7 +111,7 @@ class Home extends React.Component {
               </div>
               <div className="feedback success">This is positive feedback</div>
             </section>
-            <section className="panel ">
+            <section className="panel important ">
               <h2>Table</h2>
               <table>
                 <tbody><tr>
@@ -129,4 +143,4 @@ class Home extends React.Component {
   }
 }
 
-export default Home;
+export default Dashboard;

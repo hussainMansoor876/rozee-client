@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { BrowserRouter as Router, Route, Redirect, Switch } from "react-router-dom";
 import Login from '../Components/Login/Login';
-import Home from '../Components/Home/Home'
+import Dashboard from '../Components/Dashboard/Dashboard'
 import { connect } from 'react-redux'
 import SessionStorageManager from './SessionStorageManager';
 
@@ -38,7 +38,7 @@ class Routes extends Component {
             <Router>
                 <Switch>
                     <Route path="/" exact component={Login} />
-                    <PrivateRoute isLoggedIn={(this.props.isLoggedIn || this.state.isLoggedIn)} exact path="/dashboard" component={Home} />
+                    <PrivateRoute isLoggedIn={(this.props.isLoggedIn || this.state.isLoggedIn)} exact path="/dashboard" component={Dashboard} />
                 </Switch>
             </Router>
         )
