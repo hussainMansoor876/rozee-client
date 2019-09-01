@@ -1,8 +1,13 @@
+/*eslint-disable*/
+
 import React from 'react';
 import './Login.css'
 import 'antd/dist/antd.css';
 import { Form, Icon, Input, Button, Checkbox, notification } from 'antd';
 import { Link } from 'react-router-dom'
+import validator from 'validator'
+import { connect } from 'react-redux';
+import * as AuthMiddleware from '../../Store/middlewares/authMiddleware';
 
 const title = "Error"
 const desc = 'Please Enter Email and Password!'
@@ -12,13 +17,53 @@ class Login extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      email: '',
       password: '',
-      disable: false
+      disable: false,
+      loggedIn: false,
+      loading: false,
+      errorMessage: "",
+      successMessage: ""
+
     }
   }
 
-  openNotification = (title, desc, icon, color='#108ee9') => {
+  static getDerivedStateFromProps = (props, state) => {
+
+    if (!props.currentUser && props.isError) {
+      return {
+        loading: false,
+        errorMessage: props.errorMessage
+      }
+    }
+
+    return {
+      successMessage: props.successMessage,
+      loading: false,
+      loggedIn: true
+    }
+
+
+
+
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+
+    if (prevProps.isError !== this.props.isError) {
+      if (this.props.isError && !this.props.isLoggedIn) {
+        return this.openNotification("Problem", this.props.errorMessage, 'close-circle', 'red')
+      }
+    }
+
+    if (!this.props.isError && this.props.currentUser) {
+      this.props.history.push('/dashboard')
+    }
+
+  }
+
+
+
+  openNotification = (title, desc, icon, color = '#108ee9') => {
     notification.open({
       message: title,
       description: desc,
@@ -26,44 +71,28 @@ class Login extends React.Component {
     });
   };
 
+
   handleSubmit = e => {
     e.preventDefault();
-    this.props.form.validateFields((err, values) => {
-      if (!err) {
-        this.setState({ disable: true })
-        console.log('Received values of form: ', values);
 
-        fetch('https://cmsbackend123.herokuapp.com/', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(values),
-        })
-          .then(response => response.json())
-          .then((result) => {
-            console.log(result)
-            if (result.success) {
-              this.props.history.push('/home')
-            }
-            else {
-              this.openNotification(title, result.message, 'close-circle', 'red')
-              this.setState({ disable: false })
-            }
-          })
-        this.setState({ email: values.email })
+    this.props.form.validateFields((err, values) => {
+
+      if (!validator.isEmail(values.email)) {
+        return this.openNotification("Email", "Invalid Email", 'close-circle', 'red')
       }
-      else {
-        this.openNotification(title, desc, 'close-circle', 'red')
-      }
+
+      this.setState({ loading: true })
+      this.props.authenticate({ email: values.email, password: values.password })
+
     });
+
   };
 
 
   render() {
     const { getFieldDecorator } = this.props.form;
     return (
-      <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'ceenter' }}>
+      <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
         <div className="card">
           <div className="container">
             <Form onSubmit={this.handleSubmit} className="login-form">
@@ -91,17 +120,17 @@ class Login extends React.Component {
                 )}
               </Form.Item>
               <Form.Item>
-                {getFieldDecorator('remember', {
+                {/* {getFieldDecorator('remember', {
                   valuePropName: 'checked',
                   initialValue: true,
-                })(<Checkbox>Remember me</Checkbox>)}
-                <a className="login-form-forgot" href="">
+                })(<Checkbox>Remember me</Checkbox>)} */}
+                {/* <a className="login-form-forgot" href="">
                   Forgot password
-          </a>
-                <Button htmlType="submit" className="login-form-button" disabled={this.state.disable} style={{ backgroundColor: '#37A000', color: 'white', fontWeight: 'bold', fontSize: 14, height: 40 }}>
+                </a> */}
+                <Button htmlType="submit" className="login-form-button" disabled={this.state.disable}>
                   Log in
-          </Button>
-                Or <Link to="/register">Register Now!</Link>
+                </Button>
+                {/* Or <Link to="/register">Register Now!</Link> */}
               </Form.Item>
             </Form>
           </div>
@@ -115,5 +144,26 @@ class Login extends React.Component {
 const LoginComp = Form.create({ name: 'normal_login' })(Login);
 
 
+const mapStateToProps = (state) => {
+  return {
 
-export default LoginComp;
+    isLoading: state.auth.isLoading,
+    isError: state.auth.isError,
+    isLoggedIn: state.auth.isLoggedIn,
+    currentUser: state.auth.currentUser,
+    errorMessage: state.auth.errorMessage,
+    successMessage: state.auth.successMessage,
+
+  }
+}
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    authenticate: data => {
+      dispatch(AuthMiddleware.loginMiddleware(data))
+    }
+  }
+}
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(LoginComp)

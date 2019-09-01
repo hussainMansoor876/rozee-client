@@ -1,1 +1,16 @@
-export const ADD_USER = 'ADD_USER';
+// AUTHENTICATION TYPES
+export const USER_LOGIN = "USER_LOGIN";
+export const USER_LOGIN_SUCCESS = "USER_LOGIN_SUCCESS";
+export const USER_LOGIN_FAIL = "USER_LOGIN_FAIL";
+
+// GET MY JOBS
+export const GEY_MY_JOBS = "GEY_MY_JOBS";
+export const GEY_MY_JOBS_SUCCESS = "GEY_MY_JOBS_SUCCESS";
+export const GEY_MY_JOBS_FAIL = "GEY_MY_JOBS_FAIL";
+
+
+
+
+
+
+
