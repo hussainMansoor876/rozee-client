@@ -6,7 +6,6 @@ import SessionStorageManager from '../../Config/SessionStorageManager';
 import { connect } from 'react-redux';
 import * as jobMiddleware from '../../Store/middlewares/jobMiddleware';
 import { Modal } from 'antd'
-import JobModal from '../JobModal/JobModal'
 
 class Dashboard extends React.Component {
 
@@ -17,15 +16,43 @@ class Dashboard extends React.Component {
     errorMessage: "",
     successMessage: "",
     myJobs: [],
-    showCandidates: false
+    showCandidates: false,
+    visible: false,
+    currentJob: {}
   }
 
 
-  showModal = () => {
+  showModal = (title, desc, salary, date, CVS) => {
+
+    var currentJob = {
+      jobTitle: title,
+      jobDescription: desc,
+      salary,
+      createdAt: date,
+      CVS,
+    }
+
     this.setState({
       visible: true,
+      currentJob
     });
   };
+
+
+  handleOk = e => {
+    this.setState({
+      visible: false,
+      showCandidates: false
+    });
+  };
+
+  handleCancel = e => {
+    this.setState({
+      visible: false,
+      showCandidates: false
+    });
+  };
+
 
 
 
@@ -55,13 +82,9 @@ class Dashboard extends React.Component {
   }
 
 
-
-
   render() {
     const user = SessionStorageManager.getUser()
-    const { myJobs } = this.state
-    // console.log(this.props.myJobs)
-    console.log(this.state.myJobs)
+    const { myJobs, visible, currentJob } = this.state
     return (
       <div >
         <div>
@@ -105,48 +128,69 @@ class Dashboard extends React.Component {
                     <th>Salary</th>
                     <th>Created At</th>
                   </tr>
-                  {myJobs && myJobs.map(item => (
-                    <React.Fragment key={item._id}>
-                      <tr style={{ cursor: 'pointer' }} onClick={this.showModal}>
+                  {myJobs.map(item => (
+                    <React.Fragment key={item._id} >
+                      <tr style={{ cursor: 'pointer' }} onClick={() => this.showModal(
+                        item.jobTitle,
+                        item.jobDescription,
+                        item.salary,
+                        item.createdAt,
+                        item.CVS
+                      )}>
                         <td>{item.jobTitle}</td>
                         <td>{item.jobDescription}</td>
                         <td>{item.salary}</td>
                         <td>{new Date(item.createdAt).toDateString()}</td>
                       </tr>
 
-                      <JobModal
-                        CVS={item.CVS}
-                        jobTitle={item.jobTitle}
-                        jobDescription={item.jobDescription}
-                        salary={item.salary}
-                        createdAt={item.createdAt} />
 
                     </React.Fragment>
 
                   ))}
-                </tbody></table>
+
+                  <Modal
+                    title={currentJob.jobTitle}
+                    visible={visible}
+                    onOk={this.handleOk}
+                    onCancel={this.handleCancel}
+
+                  >
+                    <div className="modal-desc">
+                      <h6><b>Job Title:</b> {currentJob.jobTitle}</h6>
+                      <h6><b>Job Description:</b> {currentJob.jobDescription}</h6>
+                      <h6><b>Salary:</b> ${currentJob.salary}</h6>
+                      <h6><b>Posted On:</b> {new Date(currentJob.createdAt).toDateString()}</h6>
+
+                      <button onClick={this.handleCandidates}>View Candidates</button>
+
+                      {this.state.showCandidates && <table>
+                        <tr>
+                          <th>Email</th>
+                          <th>CV</th>
+
+                        </tr>
+                        {currentJob.CVS.map(CV => (
+                          <tr key={CV._id}>
+                            <td>{CV.email}</td>
+                            <td><a href={CV.cvLink}>Download CV</a></td>
+                          </tr>
+                        ))}
+                      </table>}
+
+                    </div>
+
+                  </Modal>
+
+                </tbody>
+              </table>
             </section>
 
-            {/* <section className="panel important">
-              <h2>Welcome to Your Dashboard </h2>
-              <ul>
-                <li>Important panel that will always be really wide Lorem ipsum dolor sit amet, consectetuer adipiscing
-          elit.</li>
-                <li>Aliquam tincidunt mauris eu risus.</li>
-                <li>Vestibulum auctor dapibus neque.</li>
-              </ul>
-            </section> */}
+
             <InfoCard title="Jobs" items={[{ imp: "100", desc: "New Jobs" }]} />
             <InfoCard title="Chart" items={[
-              {
-                desc: "New Jobs"
-              },
-              {
-                desc: "Lorem ipsum dolor sit amet, consectetuer adipiscing elit."
-              },
-              {
-                desc: "Aliquam tincidunt mauris eu risus."
-              }
+              { desc: "New Jobs" },
+              { desc: "Lorem ipsum dolor sit amet, consectetuer adipiscing elit." },
+              { desc: "Aliquam tincidunt mauris eu risus." }
             ]} />
 
 
@@ -159,29 +203,7 @@ class Dashboard extends React.Component {
                   <label htmlFor="textarea">Textarea:</label>
                   <textarea cols={40} rows={8} name="textarea" id="textarea" defaultValue={""} />
                 </div>
-                {/* <div className="onethird">
-                  <legend>Radio Button Choice</legend>
-                  <label htmlFor="radio-choice-1">
-                    <input type="radio" name="radio-choice" id="radio-choice-1" defaultValue="choice-1" /> Choice 1
-          </label>
-                  <label htmlFor="radio-choice-2">
-                    <input type="radio" name="radio-choice" id="radio-choice-2" defaultValue="choice-2" /> Choice 2
-          </label>
-                  <label htmlFor="select-choice">Select Dropdown Choice:</label>
-                  <select name="select-choice" id="select-choice">
-                    <option value="Choice 1">Choice 1</option>
-                    <option value="Choice 2">Choice 2</option>
-                    <option value="Choice 3">Choice 3</option>
-                  </select>
-                  <div>
-                    <label htmlFor="checkbox">
-                      <input type="checkbox" name="checkbox" id="checkbox" /> Checkbox
-            </label>
-                  </div>
-                  <div>
-                    <input type="submit" defaultValue="Submit" />
-                  </div>
-                </div> */}
+
               </form>
             </section>
             <section className="panel">
@@ -240,5 +262,3 @@ const mapDispatchToProps = (dispatch) => {
 
 
 export default connect(mapStateToProps, mapDispatchToProps)(Dashboard)
-
-// export default Dashboard;
