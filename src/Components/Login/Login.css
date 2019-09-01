@@ -81,6 +81,23 @@
     }
   }
 
+.login-form {
+  /* max-width: 500px; */
+  width: 70%;
+}
+.login-form-forgot {
+  float: right;
+}
+.login-form-button {
+  width: 100%;
+  background-color: #37A000 !important;
+  color: white !important;
+  font-weight: bold;
+  font-size: 14; 
+  height: 40;
+}
+
+
   
 
   
