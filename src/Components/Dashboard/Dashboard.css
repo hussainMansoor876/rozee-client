@@ -427,3 +427,9 @@ td {
     width: 23%;
   }
 }
+
+
+.modal-desc > h6{
+  margin-bottom: 20px;
+  line-height: 1.5; 
+}

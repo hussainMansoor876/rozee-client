@@ -32,14 +32,14 @@ class Login extends React.Component {
     if (!props.currentUser && props.isError) {
       return {
         loading: false,
-        errorMessage: props.errorMessage
+        errorMessage: props.errorMessage,
       }
     }
 
     return {
       successMessage: props.successMessage,
       loading: false,
-      loggedIn: true
+      loggedIn: true,
     }
 
 
@@ -51,6 +51,7 @@ class Login extends React.Component {
 
     if (prevProps.isError !== this.props.isError) {
       if (this.props.isError && !this.props.isLoggedIn) {
+        this.setState({ disable: false })
         return this.openNotification("Problem", this.props.errorMessage, 'close-circle', 'red')
       }
     }
@@ -81,7 +82,7 @@ class Login extends React.Component {
         return this.openNotification("Email", "Invalid Email", 'close-circle', 'red')
       }
 
-      this.setState({ loading: true })
+      this.setState({ loading: true, disable: true })
       this.props.authenticate({ email: values.email, password: values.password })
 
     });
@@ -147,8 +148,8 @@ const LoginComp = Form.create({ name: 'normal_login' })(Login);
 const mapStateToProps = (state) => {
   return {
 
-    isLoading: state.auth.isLoading,
     isError: state.auth.isError,
+    isLoading: state.auth.isLoading,
     isLoggedIn: state.auth.isLoggedIn,
     currentUser: state.auth.currentUser,
     errorMessage: state.auth.errorMessage,
