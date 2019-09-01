@@ -1,13 +1,67 @@
 /*eslint-disable*/
-import React from 'react';
+import React, { Component } from 'react';
 import './Dashboard.css'
 import InfoCard from '../InfoCard/InfoCard';
 import SessionStorageManager from '../../Config/SessionStorageManager';
+import { connect } from 'react-redux';
+import * as jobMiddleware from '../../Store/middlewares/jobMiddleware';
+import { Modal } from 'antd'
+import JobModal from '../JobModal/JobModal'
 
 class Dashboard extends React.Component {
-  render() {
 
+
+  state = {
+    isLoading: false,
+    isError: false,
+    errorMessage: "",
+    successMessage: "",
+    myJobs: [],
+    showCandidates: false
+  }
+
+
+  showModal = () => {
+    this.setState({
+      visible: true,
+    });
+  };
+
+
+
+  handleLogout = () => {
+    SessionStorageManager.clearSessionStorage();
+    window.location.reload()
+  }
+
+  componentDidMount() {
+    this.setState({ isLoading: true })
+    this.props.getPostedJobs()
+  }
+
+  static getDerivedStateFromProps(props, state) {
+
+    if (props.myJobs.length) {
+      return {
+        myJobs: props.myJobs,
+        isLoading: false,
+        successMessage: props.successMessage
+      }
+    }
+  }
+
+  handleCandidates = () => {
+    this.setState({ showCandidates: true })
+  }
+
+
+
+
+  render() {
     const user = SessionStorageManager.getUser()
+    const { myJobs } = this.state
+    // console.log(this.props.myJobs)
+    console.log(this.state.myJobs)
     return (
       <div >
         <div>
@@ -15,7 +69,7 @@ class Dashboard extends React.Component {
             <h1>Admin Panel</h1>
             <ul className="utilities">
               <li className="users"><a href="#">{user.fullName}</a></li>
-              <li className="logout warn"><a href>Log Out</a></li>
+              <li className="logout warn"><a onClick={this.handleLogout}>Log Out</a></li>
             </ul>
           </header>
           <nav role="navigation">
@@ -28,7 +82,7 @@ class Dashboard extends React.Component {
             </ul>
           </nav>
           <main role="main">
-          <InfoCard title="Welcome to your dashboard" active items={[
+            <InfoCard title="Welcome to your dashboard" active items={[
               {
                 desc: "New Jobs"
               },
@@ -39,6 +93,39 @@ class Dashboard extends React.Component {
                 desc: "Aliquam tincidunt mauris eu risus."
               }
             ]} />
+
+            <section className="panel important ">
+              <h2>Jobs</h2>
+
+              <table>
+                <tbody >
+                  <tr>
+                    <th>Job Title</th>
+                    <th>Job Description</th>
+                    <th>Salary</th>
+                    <th>Created At</th>
+                  </tr>
+                  {myJobs && myJobs.map(item => (
+                    <React.Fragment key={item._id}>
+                      <tr style={{ cursor: 'pointer' }} onClick={this.showModal}>
+                        <td>{item.jobTitle}</td>
+                        <td>{item.jobDescription}</td>
+                        <td>{item.salary}</td>
+                        <td>{new Date(item.createdAt).toDateString()}</td>
+                      </tr>
+
+                      <JobModal
+                        CVS={item.CVS}
+                        jobTitle={item.jobTitle}
+                        jobDescription={item.jobDescription}
+                        salary={item.salary}
+                        createdAt={item.createdAt} />
+
+                    </React.Fragment>
+
+                  ))}
+                </tbody></table>
+            </section>
 
             {/* <section className="panel important">
               <h2>Welcome to Your Dashboard </h2>
@@ -62,7 +149,7 @@ class Dashboard extends React.Component {
               }
             ]} />
 
-          
+
             <section className="panel important">
               <h2>Write a post</h2>
               <form action="#">
@@ -111,29 +198,7 @@ class Dashboard extends React.Component {
               </div>
               <div className="feedback success">This is positive feedback</div>
             </section>
-            <section className="panel important ">
-              <h2>Table</h2>
-              <table>
-                <tbody><tr>
-                  <th>Username</th>
-                  <th>Posts</th>
-                  <th>comments</th>
-                  <th>date</th>
-                </tr>
-                  <tr>
-                    <td>Pete</td>
-                    <td>4</td>
-                    <td>7</td>
-                    <td>Oct 10, 2015</td>
-                  </tr>
-                  <tr>
-                    <td>Mary</td>
-                    <td>5769</td>
-                    <td>2517</td>
-                    <td>Jan 1, 2014</td>
-                  </tr>
-                </tbody></table>
-            </section>
+
           </main>
           <footer role="contentinfo">Easy Admin Style by Melissa Cabral</footer>
         </div>
@@ -143,4 +208,37 @@ class Dashboard extends React.Component {
   }
 }
 
-export default Dashboard;
+
+
+
+
+
+
+
+
+
+const mapStateToProps = (state) => {
+  return {
+
+    isLoading: state.jobs.isLoading,
+    isError: state.jobs.isError,
+    errorMessage: state.jobs.errorMessage,
+    successMessage: state.jobs.successMessage,
+    myJobs: state.jobs.myJobs,
+
+  }
+}
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    getPostedJobs: () => {
+      dispatch(jobMiddleware.getPostedJobs())
+    }
+  }
+}
+
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(Dashboard)
+
+// export default Dashboard;

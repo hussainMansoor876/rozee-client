@@ -1,7 +1,8 @@
 import { combineReducers } from 'redux'
-// import {dummy_reducer} from './dummy_reducer'
 import { authReducer } from './authReducer'
+import { jobReducer } from './jobReducer'
 
 export const rootReducer = combineReducers({
-    auth: authReducer
+    auth: authReducer,
+    jobs: jobReducer
 })

@@ -6,10 +6,12 @@ const InfoCard = ({ title, items, active }) => {
             <h2>{title}</h2>
             <ul>
 
-                {items && items.map(newItem => (
-                    <React.Fragment>
-                        <li><b>{newItem.imp} </b>{newItem.desc}</li>
-                    </React.Fragment>
+                {items && items.map((newItem, idx) => (
+
+                    <li key={idx}>
+                        <b>{newItem.imp} </b>{newItem.desc}
+                    </li>
+
                 ))}
 
             </ul>
