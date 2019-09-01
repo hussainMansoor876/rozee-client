@@ -7,4 +7,3 @@ export const USER_LOGIN_FAIL = "USER_LOGIN_FAIL";
 
 
 
-export const ADD_USER = "ADD_USER"
