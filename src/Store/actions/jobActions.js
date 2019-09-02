@@ -20,3 +20,25 @@ export const getMyJobsFail = (data) => {
         data
     }
 }
+
+
+export const postJobs = () => { 
+    return {
+        type: actionTypes.POST_JOB,
+    }
+}
+
+export const postJobsSuccess = (data) => { 
+    return {
+        type: actionTypes.POST_JOB_SUCCESS,
+        data
+    }
+}
+
+
+export const postJobsFail = (data) => { 
+    return {
+        type: actionTypes.POST_JOB_FAIL,
+        data
+    }
+}

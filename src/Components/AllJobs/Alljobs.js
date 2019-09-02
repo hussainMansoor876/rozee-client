@@ -85,7 +85,7 @@ class Alljobs extends Component {
                                 <th>Job Title</th>
                                 <th>Job Description</th>
                                 <th>Salary</th>
-                                <th>Created At</th>
+                                <th>Posted On</th>
                             </tr>
                             {jobs.map((item, idx) => (
                                 <React.Fragment key={item._id} >

@@ -8,6 +8,8 @@ import Dashboard from '../Components/Dashboard/Dashboard'
 import AllJobs from '../Components/AllJobs/Alljobs'
 import Header from '../Components/Header/Header';
 import Navbar from '../Components/Navbar/Navbar';
+import PostJob from '../Components/PostJob/PostJob';
+
 
 function PrivateRoute({ component: Component, isLoggedIn, ...rest }) {
     return (
@@ -55,6 +57,7 @@ class Routes extends Component {
                     <Route path="/" exact component={Login} />
                     <PrivateRoute isLoggedIn={(this.props.isLoggedIn || this.state.isLoggedIn)} exact path="/dashboard" component={Dashboard} />
                     <PrivateRoute isLoggedIn={(this.props.isLoggedIn || this.state.isLoggedIn)} exact path="/alljobs" component={AllJobs} />
+                    <PrivateRoute isLoggedIn={(this.props.isLoggedIn || this.state.isLoggedIn)} exact path="/postjob" component={PostJob} />
 
                 </Switch>
             </Router>

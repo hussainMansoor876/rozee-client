@@ -9,6 +9,8 @@ class Navbar extends Component {
                 <ul className="main">
                     <li className="dashboard"><Link to="/dashboard">Dashboard</Link></li>
                     <li className="users"><Link to="/alljobs">All Jobs</Link></li>
+                    <li className="write"><Link to="/postjob">Post Job</Link></li>
+
                 </ul>
             </nav>
         )

@@ -121,7 +121,7 @@ class Dashboard extends React.Component {
                     <th>Job Title</th>
                     <th>Job Description</th>
                     <th>Salary</th>
-                    <th>Created At</th>
+                    <th>Posted On</th>
                   </tr>
                   {filteredJobs.map((item, idx) => (
                     <React.Fragment key={item._id} >
@@ -190,18 +190,7 @@ class Dashboard extends React.Component {
             ]} />
 
 
-            {/* <section className="panel important">
-              <h2>Write a post</h2>
-              <form action="#">
-                <div className="twothirds">
-                  <label htmlFor="name">Text Input:</label>
-                  <input type="text" name="name" id="name" placeholder="John Smith" />
-                  <label htmlFor="textarea">Textarea:</label>
-                  <textarea cols={40} rows={8} name="textarea" id="textarea" defaultValue={""} />
-                </div>
-
-              </form>
-            </section> */}
+           
             {/* <section className="panel">
               <h2>feedback</h2>
               <div className="feedback">This is neutral feedback Lorem ipsum dolor sit amet, consectetur adipisicing elit.
