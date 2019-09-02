@@ -5,7 +5,7 @@ import { EditorState } from 'draft-js';
 import { stateToHTML } from 'draft-js-export-html'
 // import ReactHtmlParser, { processNodes, convertNodeToElement, htmlparser2 } from 'react-html-parser';
 
-import { Button } from 'antd'
+import { Button, message } from 'antd'
 import { connect } from 'react-redux'
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 import './PostJob.css'
@@ -20,16 +20,38 @@ class PostJob extends Component {
         jobTitle: "",
         salary: 0,
         loading: false,
-        disabled: false
+        disabled: false,
+        isError: false,
+        successMessage: "",
+        errorMessage: ""
     };
 
 
-    static getDerivedStateFromProps(props) {
+    componentWillReceiveProps(nextProps) {
+        if (nextProps.isError) {
+            this.setState({ isError: nextProps.isError, errorMessage: nextProps.errorMessage })
+            message.error(nextProps.errorMessage)
+            return
+        }
 
-        console.log("NEW PROPS", props)
+        if (!nextProps.isError && !nextProps.isError) {
+            this.setState({
+                isError: nextProps.isError,
+                successMessage: nextProps.successMessage,
+                jobTitle: "",
+                rawHtml: "",
+                editorState: EditorState.createEmpty(),
+                salary: 0,
+                disabled: false
+            })
 
+            if (nextProps.successMessage.length) {
+                message.success(nextProps.successMessage)
+            }
+        }
     }
 
+    
     onEditorStateChange = (editorState) => {
 
         let contentState = editorState.getCurrentContent();
@@ -85,8 +107,7 @@ class PostJob extends Component {
                             />
 
                             <Button type="primary mt-2 w-100" disabled={disabled} onClick={this.handleSubmit}>Post</Button>
-                            {/* {ReactHtmlParser(rawHtml)} */}
-                            {/* <textarea cols={40} rows={8} name="textarea" id="textarea" defaultValue={""} /> */}
+                           
                         </div>
 
 
@@ -118,7 +139,6 @@ const mapDispatchToProps = (dispatch) => {
         }
     }
 }
-
 
 
 export default connect(mapStateToProps, mapDispatchToProps)(PostJob)
