@@ -5,7 +5,7 @@ import InfoCard from '../InfoCard/InfoCard';
 import SessionStorageManager from '../../Config/SessionStorageManager';
 import { connect } from 'react-redux';
 import * as jobMiddleware from '../../Store/middlewares/jobMiddleware';
-import { Modal } from 'antd'
+import { Modal, Button } from 'antd'
 import {Link} from 'react-router-dom'
 import Header from '../Header/Header';
 import Navbar from '../Navbar/Navbar';
@@ -157,7 +157,7 @@ class Dashboard extends React.Component {
                       <h6><b>Salary:</b> ${currentJob.salary}</h6>
                       <h6><b>Posted On:</b> {new Date(currentJob.createdAt).toDateString()}</h6>
 
-                      <button onClick={this.handleCandidates}>View Candidates</button>
+                      <Button type="primary" onClick={this.handleCandidates}>View Candidates</Button>
 
                       {this.state.showCandidates && <table>
                         <tr>
