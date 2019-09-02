@@ -45,7 +45,7 @@ class PostJob extends Component {
                 disabled: false
             })
 
-            if (nextProps.successMessage.length) {
+            if (nextProps.successMessage) {
                 message.success(nextProps.successMessage)
             }
         }
