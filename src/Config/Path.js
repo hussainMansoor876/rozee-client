@@ -8,6 +8,8 @@ class Path {
 
     static GET_MY_JOBS = Path.BASE_URL + "/job/getPostedJobs"
 
+    static POST_JOB = Path.BASE_URL + "/job/addNewJob"
+
 }
 
 export default Path

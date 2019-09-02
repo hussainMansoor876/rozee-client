@@ -8,6 +8,13 @@ export const GEY_MY_JOBS = "GEY_MY_JOBS";
 export const GEY_MY_JOBS_SUCCESS = "GEY_MY_JOBS_SUCCESS";
 export const GEY_MY_JOBS_FAIL = "GEY_MY_JOBS_FAIL";
 
+export const POST_JOB = "POST_JOB";
+export const POST_JOB_FAIL = "POST_JOB_FAIL";
+export const POST_JOB_SUCCESS = "POST_JOB_SUCCESS";
+
+
+
+
 
 
 

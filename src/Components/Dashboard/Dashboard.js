@@ -5,7 +5,10 @@ import InfoCard from '../InfoCard/InfoCard';
 import SessionStorageManager from '../../Config/SessionStorageManager';
 import { connect } from 'react-redux';
 import * as jobMiddleware from '../../Store/middlewares/jobMiddleware';
-import { Modal } from 'antd'
+import { Modal, Button } from 'antd'
+import {Link} from 'react-router-dom'
+import Header from '../Header/Header';
+import Navbar from '../Navbar/Navbar';
 
 class Dashboard extends React.Component {
 
@@ -18,7 +21,8 @@ class Dashboard extends React.Component {
     myJobs: [],
     showCandidates: false,
     visible: false,
-    currentJob: {}
+    currentJob: {},
+    filteredJobs: []
   }
 
 
@@ -56,10 +60,6 @@ class Dashboard extends React.Component {
 
 
 
-  handleLogout = () => {
-    SessionStorageManager.clearSessionStorage();
-    window.location.reload()
-  }
 
   componentDidMount() {
     this.setState({ isLoading: true })
@@ -72,7 +72,8 @@ class Dashboard extends React.Component {
       return {
         myJobs: props.myJobs,
         isLoading: false,
-        successMessage: props.successMessage
+        successMessage: props.successMessage,
+        filteredJobs: props.myJobs.slice(0,10)
       }
     }
   }
@@ -84,26 +85,19 @@ class Dashboard extends React.Component {
 
   render() {
     const user = SessionStorageManager.getUser()
-    const { myJobs, visible, currentJob } = this.state
+    const { myJobs, visible, currentJob, filteredJobs } = this.state
     return (
       <div >
-        <div>
-          <header role="banner">
-            <h1>Admin Panel</h1>
-            <ul className="utilities">
-              <li className="users"><a href="#">{user.fullName}</a></li>
-              <li className="logout warn"><a onClick={this.handleLogout}>Log Out</a></li>
-            </ul>
-          </header>
-          <nav role="navigation">
+          {/* <Header user={user}/> */}
+          
+          {/* <nav role="navigation">
             <ul className="main">
               <li className="dashboard"><a href="#">Dashboard</a></li>
-              <li className="write"><a href="#">Write Post</a></li>
-              <li className="edit"><a href="#">Edit Posts</a></li>
-              <li className="comments"><a href="#">Comments</a></li>
-              <li className="users"><a href="#">Manage Users</a></li>
+              <li className="users"><Link to="/alljobs">Manage Users</Link></li>
+             
             </ul>
-          </nav>
+          </nav> */}
+          
           <main role="main">
             <InfoCard title="Welcome to your dashboard" active items={[
               {
@@ -122,13 +116,14 @@ class Dashboard extends React.Component {
 
               <table>
                 <tbody >
-                  <tr>
+                  <tr className="table-header">
+                    <th>S.No</th>
                     <th>Job Title</th>
                     <th>Job Description</th>
                     <th>Salary</th>
-                    <th>Created At</th>
+                    <th>Posted On</th>
                   </tr>
-                  {myJobs.map(item => (
+                  {filteredJobs.map((item, idx) => (
                     <React.Fragment key={item._id} >
                       <tr style={{ cursor: 'pointer' }} onClick={() => this.showModal(
                         item.jobTitle,
@@ -137,6 +132,7 @@ class Dashboard extends React.Component {
                         item.createdAt,
                         item.CVS
                       )}>
+                        <td>{idx + 1}</td>
                         <td>{item.jobTitle}</td>
                         <td>{item.jobDescription}</td>
                         <td>{item.salary}</td>
@@ -161,7 +157,7 @@ class Dashboard extends React.Component {
                       <h6><b>Salary:</b> ${currentJob.salary}</h6>
                       <h6><b>Posted On:</b> {new Date(currentJob.createdAt).toDateString()}</h6>
 
-                      <button onClick={this.handleCandidates}>View Candidates</button>
+                      <Button type="primary" onClick={this.handleCandidates}>View Candidates</Button>
 
                       {this.state.showCandidates && <table>
                         <tr>
@@ -194,19 +190,8 @@ class Dashboard extends React.Component {
             ]} />
 
 
-            <section className="panel important">
-              <h2>Write a post</h2>
-              <form action="#">
-                <div className="twothirds">
-                  <label htmlFor="name">Text Input:</label>
-                  <input type="text" name="name" id="name" placeholder="John Smith" />
-                  <label htmlFor="textarea">Textarea:</label>
-                  <textarea cols={40} rows={8} name="textarea" id="textarea" defaultValue={""} />
-                </div>
-
-              </form>
-            </section>
-            <section className="panel">
+           
+            {/* <section className="panel">
               <h2>feedback</h2>
               <div className="feedback">This is neutral feedback Lorem ipsum dolor sit amet, consectetur adipisicing elit.
                 Alias, praesentium. Libero perspiciatis quis aliquid iste quam dignissimos, accusamus temporibus ullam
@@ -219,23 +204,14 @@ class Dashboard extends React.Component {
                 </ul>
               </div>
               <div className="feedback success">This is positive feedback</div>
-            </section>
+            </section> */}
 
           </main>
-          <footer role="contentinfo">Easy Admin Style by Melissa Cabral</footer>
-        </div>
-
+          <footer role="contentinfo">Admin Panel by Umair Ahmed</footer>
       </div>
     )
   }
 }
-
-
-
-
-
-
-
 
 
 

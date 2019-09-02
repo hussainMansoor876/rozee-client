@@ -11,13 +11,38 @@ export const getPostedJobs = () => {
             posterId: userId
         }).then(response => {
             if (!response.data.success) {
-                return dispatch(JobActions.getMyJobsFail({ success: false, errorMessage: response.data.message }))
+                return dispatch(JobActions.getMyJobsFail({ success: false, message: response.data.message }))
             }
 
-            dispatch(JobActions.getMyJobsSuccess({ success: false, successMessage: response.data.message, myJobs: response.data.jobs }))
+            dispatch(JobActions.getMyJobsSuccess({ success: true, message: response.data.message, myJobs: response.data.jobs }))
         }).catch(err => {
-            dispatch(JobActions.getMyJobsFail({ success: false, errorMessage: "Something went wrong please try again later" }))
+            dispatch(JobActions.getMyJobsFail({ success: false, message: "Something went wrong please try again later" }))
 
         })
     }
+}
+
+
+export const postJob = (data) => { 
+    return dispatch => {
+        dispatch(JobActions.postJobs());
+        const userId = SessionStorageManager.getUser()._id
+        axios.post(Path.POST_JOB, {
+            posterId: userId,
+            jobTitle: data.jobTitle, 
+            jobDescription: data.rawHtml,
+            salary: data.salary
+        }).then(response => {
+            console.log("POST JOB RESPONSE", response)
+            if (!response.data.success) {
+                return dispatch(JobActions.postJobsFail({ success: false, message: response.data.message }))
+            }
+
+            dispatch(JobActions.postJobsSuccess({ success: true, message: response.data.message }))
+        }).catch(err => {
+            dispatch(JobActions.postJobsFail({ success: false, message: "Something went wrong please try again later" }))
+
+        })
+    }
+
 }
