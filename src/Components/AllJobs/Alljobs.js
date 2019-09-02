@@ -7,7 +7,6 @@ class Alljobs extends Component {
 
     state = {
         currentJob: {},
-        visible: false,
         jobs: [],
         isLoading: false,
         isError: false,
@@ -33,12 +32,13 @@ class Alljobs extends Component {
         this.props.getPostedJobs()
     }
 
-    showModal = (title, desc, salary, date, CVS) => {
+    showModal = (title, desc, location, role, date, CVS) => {
 
         var currentJob = {
             jobTitle: title,
             jobDescription: desc,
-            salary,
+            location,
+            role,
             createdAt: date,
             CVS,
         }
@@ -84,7 +84,8 @@ class Alljobs extends Component {
                                 <th>S.No</th>
                                 <th>Job Title</th>
                                 <th>Job Description</th>
-                                <th>Salary</th>
+                                <th>Location</th>
+                                <th>Role</th>
                                 <th>Posted On</th>
                             </tr>
                             {jobs.map((item, idx) => (
@@ -92,14 +93,17 @@ class Alljobs extends Component {
                                     <tr style={{ cursor: 'pointer' }} onClick={() => this.showModal(
                                         item.jobTitle,
                                         item.jobDescription,
-                                        item.salary,
+                                        item.location,
+                                        item.role,
                                         item.createdAt,
                                         item.CVS
                                     )}>
                                         <td>{idx + 1}</td>
                                         <td>{item.jobTitle}</td>
                                         <td>{item.jobDescription}</td>
-                                        <td>{item.salary}</td>
+                                        <td>{item.location}</td>
+                                        <td>{item.role}</td>
+
                                         <td>{new Date(item.createdAt).toDateString()}</td>
                                     </tr>
 
@@ -118,7 +122,8 @@ class Alljobs extends Component {
                                 <div className="modal-desc">
                                     <h6><b>Job Title:</b> {currentJob.jobTitle}</h6>
                                     <h6><b>Job Description:</b> {currentJob.jobDescription}</h6>
-                                    <h6><b>Salary:</b> ${currentJob.salary}</h6>
+                                    <h6><b>Location</b> {currentJob.location}</h6>
+                                    <h6><b>Role</b> {currentJob.role}</h6>
                                     <h6><b>Posted On:</b> {new Date(currentJob.createdAt).toDateString()}</h6>
 
                                     <Button type="primary" onClick={this.handleCandidates}>View Candidates</Button>
