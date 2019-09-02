@@ -26,12 +26,14 @@ class Dashboard extends React.Component {
   }
 
 
-  showModal = (title, desc, salary, date, CVS) => {
+  showModal = (title, desc, location, role, date, CVS) => {
 
     var currentJob = {
       jobTitle: title,
       jobDescription: desc,
-      salary,
+      // salary,
+      location,
+      role,
       createdAt: date,
       CVS,
     }
@@ -120,7 +122,8 @@ class Dashboard extends React.Component {
                     <th>S.No</th>
                     <th>Job Title</th>
                     <th>Job Description</th>
-                    <th>Salary</th>
+                    <th>Location</th>
+                    <th>Role</th>
                     <th>Posted On</th>
                   </tr>
                   {filteredJobs.map((item, idx) => (
@@ -128,14 +131,17 @@ class Dashboard extends React.Component {
                       <tr style={{ cursor: 'pointer' }} onClick={() => this.showModal(
                         item.jobTitle,
                         item.jobDescription,
-                        item.salary,
+                        // item.salary,
+                        item.location,
+                        item.role,
                         item.createdAt,
                         item.CVS
                       )}>
                         <td>{idx + 1}</td>
                         <td>{item.jobTitle}</td>
                         <td>{item.jobDescription}</td>
-                        <td>{item.salary}</td>
+                        <td>{item.location}</td>
+                        <td>{item.role}</td>
                         <td>{new Date(item.createdAt).toDateString()}</td>
                       </tr>
 
@@ -154,7 +160,8 @@ class Dashboard extends React.Component {
                     <div className="modal-desc">
                       <h6><b>Job Title:</b> {currentJob.jobTitle}</h6>
                       <h6><b>Job Description:</b> {currentJob.jobDescription}</h6>
-                      <h6><b>Salary:</b> ${currentJob.salary}</h6>
+                      <h6><b>Location:</b> {currentJob.location}</h6>
+                      <h6><b>Role:</b> {currentJob.role}</h6>
                       <h6><b>Posted On:</b> {new Date(currentJob.createdAt).toDateString()}</h6>
 
                       <Button type="primary" onClick={this.handleCandidates}>View Candidates</Button>
