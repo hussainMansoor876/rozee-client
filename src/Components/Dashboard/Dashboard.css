@@ -28,88 +28,6 @@ body.login {
   color: lightsalmon;
 }
 
-/* header */
-header[role=banner] {
-  background: white;
-  box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.15);
-}
-header[role=banner] h1 {
-  margin: 0;
-  font-weight: 300;
-  padding: 1rem;
-}
-header[role=banner] h1:before {
-  content: "\f248";
-  font-family: FontAwesome;
-  padding-right: .6em;
-  color: turquoise;
-}
-header[role=banner] .utilities {
-  width: 100%;
-  background: slategray;
-  color: #ddd;
-}
-header[role=banner] .utilities li {
-  border-bottom: solid 1px rgba(255, 255, 255, 0.2);
-}
-header[role=banner] .utilities li a {
-  padding: .7em;
-  display: block;
-}
-
-/* header */
-.utilities a:before {
-  content: "\f248";
-  font-family: FontAwesome;
-  padding-right: .6em;
-}
-
-.logout a:before {
-  content: "";
-}
-
-.users a:before {
-  content: "";
-}
-
-nav[role=navigation] {
-  background: #2a3542;
-  color: #ddd;
-  /* icons */
-}
-nav[role=navigation] li {
-  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-}
-nav[role=navigation] li a {
-  color: #ddd;
-  text-decoration: none;
-  display: block;
-  padding: .7em;
-}
-nav[role=navigation] li a:hover {
-  background-color: rgba(255, 255, 255, 0.05);
-}
-nav[role=navigation] li a:before {
-  content: "\f248";
-  font-family: FontAwesome;
-  padding-right: .6em;
-}
-nav[role=navigation] .dashboard a:before {
-  content: "";
-}
-nav[role=navigation] .write a:before {
-  content: "";
-}
-nav[role=navigation] .edit a:before {
-  content: "";
-}
-nav[role=navigation] .comments a:before {
-  content: "";
-}
-nav[role=navigation] .users a:before {
-  content: "";
-}
-
 /* current nav item */
 .current, .dashboard .dashboard a, .write .write a, .edit .edit a, .comments .comments a, .users .users a {
   background-color: rgba(255, 255, 255, 0.1);
@@ -432,4 +350,8 @@ td {
 .modal-desc > h6{
   margin-bottom: 20px;
   line-height: 1.5; 
+}
+
+.table-header > th {
+  font-weight: bold;
 }

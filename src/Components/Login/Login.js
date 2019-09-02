@@ -8,6 +8,7 @@ import { Link } from 'react-router-dom'
 import validator from 'validator'
 import { connect } from 'react-redux';
 import * as AuthMiddleware from '../../Store/middlewares/authMiddleware';
+import SessionStorageManager from '../../Config/SessionStorageManager';
 
 const title = "Error"
 const desc = 'Please Enter Email and Password!'
@@ -42,10 +43,16 @@ class Login extends React.Component {
       loggedIn: true,
     }
 
-
-
-
   }
+
+  componentDidMount() {
+    const user = SessionStorageManager.getUser();
+
+    if(user){
+      this.props.history.push('/dashboard')
+    }
+  }
+  
 
   componentDidUpdate(prevProps, prevState) {
 
