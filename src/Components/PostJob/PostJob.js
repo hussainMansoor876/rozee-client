@@ -11,6 +11,7 @@ import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 import './PostJob.css'
 import htmlToText from 'html-to-text';
 import * as jobMiddleware from '../../Store/middlewares/jobMiddleware'
+import { countries, roles } from '../../Config/constants'
 
 class PostJob extends Component {
 
@@ -18,7 +19,8 @@ class PostJob extends Component {
         editorState: EditorState.createEmpty(),
         rawHtml: "",
         jobTitle: "",
-        salary: 0,
+        location: countries[0].name,
+        role: roles[0].position,
         loading: false,
         disabled: false,
         isError: false,
@@ -40,8 +42,10 @@ class PostJob extends Component {
                 successMessage: nextProps.successMessage,
                 jobTitle: "",
                 rawHtml: "",
+                role: "",
+                location: "",
                 editorState: EditorState.createEmpty(),
-                salary: 0,
+                location: "",
                 disabled: false
             })
 
@@ -51,7 +55,7 @@ class PostJob extends Component {
         }
     }
 
-    
+
     onEditorStateChange = (editorState) => {
 
         let contentState = editorState.getCurrentContent();
@@ -74,16 +78,16 @@ class PostJob extends Component {
 
     }
 
+
     handleSubmit = (e) => {
         e.preventDefault();
-        const { jobTitle, salary, rawHtml } = this.state
+        const { jobTitle, location, role, rawHtml } = this.state
         this.setState({ loading: true, disabled: true })
-        this.props.postJob({ jobTitle, salary, rawHtml })
+        this.props.postJob({ jobTitle, location, role, rawHtml })
     }
 
     render() {
-        const { editorState, jobTitle, salary, disabled } = this.state
-
+        const { editorState, jobTitle, location, role, disabled } = this.state
 
         return (
             <main role="main">
@@ -94,8 +98,20 @@ class PostJob extends Component {
                             <label htmlFor="jobTitle">Job Title</label>
                             <input value={jobTitle} onChange={this.handleChange} type="text" name="jobTitle" id="jobTitle" placeholder="Need a MERN Developer" />
 
-                            <label htmlFor="salary">Salary</label>
-                            <input value={salary} onChange={this.handleChange} type="number" name="salary" id="salary" ></input>
+                            <label htmlFor="location">Location</label>
+                            <select value={location} name="location" onChange={this.handleChange}>
+                                {countries.map((item, idx) => (
+                                    <option value={item.name}>{item.name}</option>
+                                ))}
+                            </select>
+
+                            <label htmlFor="role">Role</label>
+
+                            <select value={role} name="role" onChange={this.handleChange}>
+                                {roles.map((item, idx) => (
+                                    <option value={item.position}>{item.position}</option>
+                                ))}
+                            </select>
 
                             <label htmlFor="textarea">Description</label>
                             <Editor
@@ -107,7 +123,7 @@ class PostJob extends Component {
                             />
 
                             <Button type="primary mt-2 w-100" disabled={disabled} onClick={this.handleSubmit}>Post</Button>
-                           
+
                         </div>
 
 
