@@ -31,7 +31,8 @@ export const postJob = (data) => {
             posterId: userId,
             jobTitle: data.jobTitle, 
             jobDescription: data.rawHtml,
-            salary: data.salary
+            location: data.location, 
+            role: data.role
         }).then(response => {
             console.log("POST JOB RESPONSE", response)
             if (!response.data.success) {
