@@ -1,14 +1,15 @@
 import React, { Component } from 'react'
-import { Modal, Button } from 'antd'
 import { connect } from 'react-redux'
 import * as jobMiddleware from '../../Store/middlewares/jobMiddleware'
 import './EditJob.css'
 import { countries, roles } from '../../Config/constants'
+import { message } from 'antd'
 
 class EditJob extends Component {
 
     state = {
         currentJob: {
+            ID: "",
             jobTitle: "",
             jobDescription: "",
             location: "",
@@ -24,23 +25,57 @@ class EditJob extends Component {
 
     }
 
-    static getDerivedStateFromProps(props) {
-        if (props.myJobs.length) {
-            return {
-                jobs: props.myJobs,
+    // static getDerivedStateFromProps(props) {
+    //     if (props.myJobs.length) {
+    //         return {
+    //             jobs: props.myJobs,
+    //             isLoading: false,
+    //             successMessage: props.successMessage,
+    //         }
+    //     }
+
+    // }
+
+    componentWillReceiveProps(nextProps) {
+        if (nextProps.myJobs.length) {
+            this.setState({
+                jobs: nextProps.myJobs,
                 isLoading: false,
-                successMessage: props.successMessage,
-            }
+                successMessage: nextProps.successMessage,
+            })
         }
+
+        if (nextProps.isError) {
+            return message.error(nextProps.errorMessage)
+        }
+
+
+        if (nextProps.successMessage === "Job Updated") {
+            message.success(nextProps.successMessage)
+            let currentJob = {
+                ID: "",
+                jobTitle: "",
+                jobDescription: "",
+                location: "",
+                role: "",
+            }
+
+            this.setState({ currentJob, isLoading: false })
+            this.props.getPostedJobs()
+
+        }
+
     }
+
 
     componentDidMount() {
         this.setState({ isLoading: true })
         this.props.getPostedJobs()
     }
 
-    updateSetter = (jobTitle, jobDescription, location, role, ) => {
+    updateSetter = (ID, jobTitle, jobDescription, location, role, ) => {
         let currentJob = {
+            ID,
             jobTitle,
             jobDescription,
             location,
@@ -59,17 +94,23 @@ class EditJob extends Component {
 
     handleSubmit = event => {
         event.preventDefault()
-       const { currentJob } = this.state
-       const updatedJob = currentJob;
+        const { currentJob } = this.state
+        const updatedJob = currentJob;
 
-       console.log(updatedJob)
+        this.setState({ isLoading: true, })
+        this.props.updatedNewJob({
+            jobId: updatedJob.ID,
+            title: updatedJob.jobTitle,
+            role: updatedJob.role,
+            location: updatedJob.location,
+            desc: updatedJob.jobDescription,
+        })
 
     }
 
 
     render() {
         const { currentJob, jobs, } = this.state
-        console.log(currentJob)
         return (
             <main role="main">
                 <section className="panel important ">
@@ -88,14 +129,14 @@ class EditJob extends Component {
                             <label htmlFor="location">Location</label>
                             <select value={currentJob.location} name="location" onChange={this.handleChange}>
                                 {countries.map((item, idx) => (
-                                    <option value={item.name}>{item.name}</option>
+                                    <option key={idx} value={item.name}>{item.name}</option>
                                 ))}
                             </select>
 
                             <label htmlFor="role">Role</label>
                             <select value={currentJob.role} name="role" onChange={this.handleChange}>
                                 {roles.map((item, idx) => (
-                                    <option value={item.position}>{item.position}</option>
+                                    <option key={idx} value={item.position}>{item.position}</option>
                                 ))}
                             </select>
 
@@ -116,6 +157,7 @@ class EditJob extends Component {
                             {jobs.map((item, idx) => (
                                 <React.Fragment key={item._id} >
                                     <tr style={{ cursor: 'pointer' }} onClick={() => this.updateSetter(
+                                        item._id,
                                         item.jobTitle,
                                         item.jobDescription,
                                         item.location,
@@ -161,6 +203,10 @@ const mapDispatchToProps = (dispatch) => {
     return {
         getPostedJobs: () => {
             dispatch(jobMiddleware.getPostedJobs())
+        },
+
+        updatedNewJob: (data) => {
+            dispatch(jobMiddleware.updateNewJob(data))
         }
     }
 }

@@ -1,5 +1,6 @@
 import * as actionTypes from './Types';
 
+// GET JOBS ACTIONS
 export const getMyJobs = () => { 
     return {
         type: actionTypes.GEY_MY_JOBS,
@@ -22,6 +23,7 @@ export const getMyJobsFail = (data) => {
 }
 
 
+// POST JOB ACTIONS
 export const postJobs = () => { 
     return {
         type: actionTypes.POST_JOB,
@@ -39,6 +41,28 @@ export const postJobsSuccess = (data) => {
 export const postJobsFail = (data) => { 
     return {
         type: actionTypes.POST_JOB_FAIL,
+        data
+    }
+}
+
+// UPDATE JOBS ACTIONS
+export const updateJob = () => { 
+    return {
+        type: actionTypes.UPDATE_JOB,
+    }
+}
+
+export const updateJobSuccess = (data) => { 
+    return {
+        type: actionTypes.UPDATE_JOB_SUCCESS,
+        data
+    }
+}
+
+
+export const updateJobFail = (data) => { 
+    return {
+        type: actionTypes.UPDATE_JOB_FAIL,
         data
     }
 }

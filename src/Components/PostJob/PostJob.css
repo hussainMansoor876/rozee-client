@@ -59,7 +59,7 @@ form input[type=submit]:hover {
   border-bottom: solid 4px #eadc5f;
   padding: .7em 3em;
   margin: 1em 0;
-  color: white;
+  color: black;
   text-shadow: 0 -1px 0 #eadc5f;
   font-size: 1.1em;
   font-weight: bold;

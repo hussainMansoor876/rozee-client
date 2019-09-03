@@ -45,7 +45,6 @@ class PostJob extends Component {
                 location: countries[0].name,
                 role: roles[0].position,
                 editorState: EditorState.createEmpty(),
-                location: "",
                 disabled: false
             })
 

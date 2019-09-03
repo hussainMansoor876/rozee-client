@@ -10,7 +10,6 @@ const initialJobState = {
 }
 
 export const jobReducer = (state = initialJobState, action) => {
-    console.log(action)
     switch (action.type) {
         case actionTypes.GEY_MY_JOBS:
             return {
@@ -61,6 +60,34 @@ export const jobReducer = (state = initialJobState, action) => {
             }
 
         case actionTypes.POST_JOB_FAIL:
+            return {
+                ...state,
+                isLoading: false,
+                isError: true,
+                errorMessage: action.data.message,
+                successMessage: "",
+            }
+
+
+        case actionTypes.UPDATE_JOB:
+            return {
+                ...state,
+                isLoading: true,
+                isError: false,
+                errorMessage: "",
+                successMessage: "",
+            }
+
+        case actionTypes.UPDATE_JOB_SUCCESS:
+            return {
+                ...state,
+                isLoading: false,
+                isError: false,
+                errorMessage: "",
+                successMessage: action.data.message,
+            }
+
+        case actionTypes.UPDATE_JOB_FAIL:
             return {
                 ...state,
                 isLoading: false,

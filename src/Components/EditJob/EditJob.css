@@ -1,10 +1,9 @@
 .form-style-6{
-	font: 95% Arial, Helvetica, sans-serif;
-	/* max-width: 400px; */
-	margin: 10px auto;
 	padding: 16px;
 	background: #F7F7F7;
+	margin-bottom: 20px;
 }
+
 .form-style-6 h1{
 	background: #43D1AF;
 	padding: 20px 0;
@@ -14,6 +13,10 @@
 	color: #fff;
 	margin: -16px -16px 16px -16px;
 }
+.form-style-6 label {
+	font-size: 20px;
+}
+
 .form-style-6 input[type="text"],
 .form-style-6 input[type="date"],
 .form-style-6 input[type="datetime"],
@@ -34,9 +37,7 @@
 	-moz-box-sizing: border-box;
 	width: 100%;
 	background: #fff;
-	margin-bottom: 4%;
 	border: 1px solid #ccc;
-	padding: 3%;
 	color: #555;
 	font: 95% Arial, Helvetica, sans-serif;
 }
