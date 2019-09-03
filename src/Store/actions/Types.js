@@ -8,9 +8,20 @@ export const GEY_MY_JOBS = "GEY_MY_JOBS";
 export const GEY_MY_JOBS_SUCCESS = "GEY_MY_JOBS_SUCCESS";
 export const GEY_MY_JOBS_FAIL = "GEY_MY_JOBS_FAIL";
 
+// POST A JOB
 export const POST_JOB = "POST_JOB";
 export const POST_JOB_FAIL = "POST_JOB_FAIL";
 export const POST_JOB_SUCCESS = "POST_JOB_SUCCESS";
+
+// UPDATE JOB 
+export const UPDATE_JOB = "UPDATE_JOB"
+export const UPDATE_JOB_SUCCESS = "UPDATE_JOB_SUCCESS"
+export const UPDATE_JOB_FAIL = "UPDATE_JOB_FAIL"
+
+
+export const REMOVE_JOB = "REMOVE_JOB"
+export const REMOVE_JOB_SUCCESS = "REMOVE_JOB_SUCCESS"
+export const REMOVE_JOB_FAIL = "REMOVE_JOB_FAIL"
 
 
 

@@ -10,6 +10,7 @@ class Navbar extends Component {
                     <li className="dashboard"><Link to="/dashboard">Dashboard</Link></li>
                     <li className="users"><Link to="/alljobs">All Jobs</Link></li>
                     <li className="write"><Link to="/postjob">Post Job</Link></li>
+                    <li className="edit"><Link to="/editjob">Edit Job</Link></li>
 
                 </ul>
             </nav>

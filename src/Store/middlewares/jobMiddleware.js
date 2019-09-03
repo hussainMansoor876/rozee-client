@@ -23,15 +23,15 @@ export const getPostedJobs = () => {
 }
 
 
-export const postJob = (data) => { 
+export const postJob = (data) => {
     return dispatch => {
         dispatch(JobActions.postJobs());
         const userId = SessionStorageManager.getUser()._id
         axios.post(Path.POST_JOB, {
             posterId: userId,
-            jobTitle: data.jobTitle, 
+            jobTitle: data.jobTitle,
             jobDescription: data.rawHtml,
-            location: data.location, 
+            location: data.location,
             role: data.role
         }).then(response => {
             console.log("POST JOB RESPONSE", response)
@@ -46,4 +46,51 @@ export const postJob = (data) => {
         })
     }
 
+}
+
+export const updateNewJob = data => {
+    return dispatch => {
+        dispatch(JobActions.updateJob())
+        const { jobId, title, role, location, desc } = data
+        axios.post(Path.EDIT_JOB, {
+            jobId,
+            title,
+            role,
+            location,
+            desc,
+        }).then(response => {
+            console.log("UPDATE JOB RESPONSE", response)
+            if (!response.data.success) {
+                return dispatch(JobActions.updateJobFail({ success: false, message: response.data.message }))
+            }
+
+            dispatch(JobActions.updateJobSuccess({ success: true, message: response.data.message }))
+        }).catch(err => {
+            dispatch(JobActions.updateJobFail({ success: false, message: "Something went wrong please try again later" }))
+
+        })
+    }
+}
+
+export const removeNewJob = data => {
+    return dispatch => {
+        dispatch(JobActions.removeJob())
+        const { jobId } = data
+        axios.post(Path.REMOVE_JOB, {
+            jobId
+        }).then(response => {
+
+            console.log("remove job", response)
+
+            if (!response.data.success) {
+                return dispatch(JobActions.removeJobFail({ success: false, message: response.data.message }))
+            }
+
+            dispatch(JobActions.removeJobSuccess({ success: true, message: response.data.message }))
+
+
+        }).catch(err => {
+            dispatch(JobActions.removeJobFail({ success: false, message: "Something went wrong please try again later" }))
+        })
+    }
 }

@@ -10,6 +10,10 @@ class Path {
 
     static POST_JOB = Path.BASE_URL + "/job/addNewJob"
 
+    static EDIT_JOB = Path.BASE_URL + "/job/edit"
+
+    static REMOVE_JOB = Path.BASE_URL + "/job/removeJob"
+
 }
 
 export default Path
