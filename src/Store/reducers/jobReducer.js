@@ -96,6 +96,32 @@ export const jobReducer = (state = initialJobState, action) => {
                 successMessage: "",
             }
 
+        case actionTypes.REMOVE_JOB:
+            return {
+                isLoading: true,
+                isError: false,
+                errorMessage: "",
+                successMessage: "",
+            }
+
+        case actionTypes.REMOVE_JOB_SUCCESS:
+            return {
+                ...state,
+                isLoading: false,
+                isError: false,
+                errorMessage: "",
+                successMessage: action.data.message,
+            }
+
+        case actionTypes.REMOVE_JOB_FAIL:
+            return {
+                ...state,
+                isLoading: false,
+                isError: true,
+                errorMessage: action.data.message,
+                successMessage: "",
+            }
+
         default:
             return state
     }

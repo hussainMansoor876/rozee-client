@@ -66,3 +66,25 @@ export const updateJobFail = (data) => {
         data
     }
 }
+
+
+export const removeJob = () => { 
+    return {
+        type: actionTypes.REMOVE_JOB,
+    }
+}
+
+export const removeJobSuccess = (data) => { 
+    return {
+        type: actionTypes.REMOVE_JOB_SUCCESS,
+        data
+    }
+}
+
+
+export const removeJobFail = (data) => { 
+    return {
+        type: actionTypes.REMOVE_JOB_FAIL,
+        data
+    }
+}

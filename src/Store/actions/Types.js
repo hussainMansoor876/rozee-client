@@ -19,6 +19,10 @@ export const UPDATE_JOB_SUCCESS = "UPDATE_JOB_SUCCESS"
 export const UPDATE_JOB_FAIL = "UPDATE_JOB_FAIL"
 
 
+export const REMOVE_JOB = "REMOVE_JOB"
+export const REMOVE_JOB_SUCCESS = "REMOVE_JOB_SUCCESS"
+export const REMOVE_JOB_FAIL = "REMOVE_JOB_FAIL"
+
 
 
 

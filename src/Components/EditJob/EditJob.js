@@ -1,3 +1,4 @@
+/*eslint-disable*/
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import * as jobMiddleware from '../../Store/middlewares/jobMiddleware'
@@ -21,27 +22,16 @@ class EditJob extends Component {
         errorMessage: "",
         successMessage: "",
         showCandidates: false,
-
-
+        edit: false
     }
 
-    // static getDerivedStateFromProps(props) {
-    //     if (props.myJobs.length) {
-    //         return {
-    //             jobs: props.myJobs,
-    //             isLoading: false,
-    //             successMessage: props.successMessage,
-    //         }
-    //     }
-
-    // }
-
     componentWillReceiveProps(nextProps) {
-        if (nextProps.myJobs.length) {
+        if (nextProps.myJobs && nextProps.myJobs.length) {
             this.setState({
                 jobs: nextProps.myJobs,
                 isLoading: false,
                 successMessage: nextProps.successMessage,
+                edit: false
             })
         }
 
@@ -59,10 +49,20 @@ class EditJob extends Component {
                 location: "",
                 role: "",
             }
-
-            this.setState({ currentJob, isLoading: false })
             this.props.getPostedJobs()
+            this.setState({ currentJob, isLoading: false, edit: false })
 
+        } else if (nextProps.successMessage === "Job Removed") {
+            message.success(nextProps.successMessage)
+            let currentJob = {
+                ID: "",
+                jobTitle: "",
+                jobDescription: "",
+                location: "",
+                role: "",
+            }
+            this.props.getPostedJobs()
+            this.setState({ currentJob, isLoading: false, edit: false })
         }
 
     }
@@ -81,7 +81,7 @@ class EditJob extends Component {
             location,
             role,
         }
-        this.setState({ currentJob })
+        this.setState({ currentJob, edit: true })
 
     }
 
@@ -108,9 +108,17 @@ class EditJob extends Component {
 
     }
 
+    removeJob = (event) => {
+        event.preventDefault()
+        const { currentJob } = this.state
+        const updatedJob = currentJob
+        this.setState({ isLoading: true })
+        this.props.removeNewJob({ jobId: updatedJob.ID })
+    }
+
 
     render() {
-        const { currentJob, jobs, } = this.state
+        const { currentJob, jobs, edit } = this.state
         return (
             <main role="main">
                 <section className="panel important ">
@@ -118,13 +126,13 @@ class EditJob extends Component {
                     <h6 className="mt-0" style={{ margin: '1rem' }}>Select a job to edit</h6>
 
                     <div className="form-style-6 panel important">
-                        <form onSubmit={this.handleSubmit}>
+                        <form >
 
                             <label htmlFor="jobTitle">Job Title</label>
-                            <input type="text" onChange={this.handleChange} value={currentJob.jobTitle} name="jobTitle" placeholder="Your Name" />
+                            <input type="text" onChange={this.handleChange} value={currentJob.jobTitle} name="jobTitle" placeholder="Job title" />
 
                             <label htmlFor="jobDescription">Job Description</label>
-                            <input type="text" onChange={this.handleChange} value={currentJob.jobDescription} name="jobDescription" placeholder="Email Address" />
+                            <input type="text" onChange={this.handleChange} value={currentJob.jobDescription} name="jobDescription" placeholder="Job description" />
 
                             <label htmlFor="location">Location</label>
                             <select value={currentJob.location} name="location" onChange={this.handleChange}>
@@ -140,7 +148,10 @@ class EditJob extends Component {
                                 ))}
                             </select>
 
-                            <input type="submit" value="Update"></input>
+                            <input onClick={this.handleSubmit} type="submit" value="Update"></input>
+
+                            {edit ? <input onClick={this.removeJob} className="dltBtn" type="submit" value="Remove"></input> : null}
+
                         </form>
                     </div>
 
@@ -207,6 +218,9 @@ const mapDispatchToProps = (dispatch) => {
 
         updatedNewJob: (data) => {
             dispatch(jobMiddleware.updateNewJob(data))
+        },
+        removeNewJob: (data) => {
+            dispatch(jobMiddleware.removeNewJob(data))
         }
     }
 }

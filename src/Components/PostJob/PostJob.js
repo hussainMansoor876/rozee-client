@@ -1,10 +1,8 @@
+/*eslint-disable*/
 import React, { Component } from 'react'
-
 import { Editor } from 'react-draft-wysiwyg';
 import { EditorState } from 'draft-js';
 import { stateToHTML } from 'draft-js-export-html'
-// import ReactHtmlParser, { processNodes, convertNodeToElement, htmlparser2 } from 'react-html-parser';
-
 import { Button, message } from 'antd'
 import { connect } from 'react-redux'
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
@@ -100,14 +98,14 @@ class PostJob extends Component {
                             <label htmlFor="location">Location</label>
                             <select value={location} name="location" onChange={this.handleChange}>
                                 {countries.map((item, idx) => (
-                                    <option value={item.name}>{item.name}</option>
+                                    <option key={idx} value={item.name}>{item.name}</option>
                                 ))}
                             </select>
                             {/* Role */}
                             <label htmlFor="role">Role</label>
                             <select value={role} name="role" onChange={this.handleChange}>
                                 {roles.map((item, idx) => (
-                                    <option value={item.position}>{item.position}</option>
+                                    <option key={idx} value={item.position}>{item.position}</option>
                                 ))}
                             </select>
 

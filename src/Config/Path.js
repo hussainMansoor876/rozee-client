@@ -1,8 +1,8 @@
 class Path {
 
-    // static BASE_URL = "https://rozee-server.herokuapp.com"
+    static BASE_URL = "https://rozee-server.herokuapp.com"
 
-    static BASE_URL = "http://localhost:3001"
+    // static BASE_URL = "http://localhost:3001"
 
     static USER_LOGIN = Path.BASE_URL + "/auth/login"
 
@@ -12,7 +12,7 @@ class Path {
 
     static EDIT_JOB = Path.BASE_URL + "/job/edit"
 
-    // static REMOVE_JOB = Path.BASE_URL + "/job/remove"
+    static REMOVE_JOB = Path.BASE_URL + "/job/removeJob"
 
 }
 

@@ -14,8 +14,6 @@
     width: auto;
 }
 
-
-
 /* forms */
 form input, form textarea, form select {
   width: 100%;
@@ -52,7 +50,16 @@ form input[type=submit] {
   -moz-border-radius: .5em;
   -ms-border-radius: .5em;
   border-radius: .5em;
+  cursor: pointer;
 }
+.dltBtn{
+    background-color: red !important;
+    margin-left: 15px !important;
+    color: white !important
+}
+
+
+
 form input[type=submit]:hover {
   background: khaki;
   border: none;

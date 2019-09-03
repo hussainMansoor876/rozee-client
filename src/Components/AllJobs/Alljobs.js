@@ -129,17 +129,20 @@ class Alljobs extends Component {
                                     <Button type="primary" onClick={this.handleCandidates}>View Candidates</Button>
 
                                     {this.state.showCandidates && <table>
-                                        <tr>
-                                            <th>Email</th>
-                                            <th>CV</th>
+                                        <tbody>
+                                            <tr>
+                                                <th>Email</th>
+                                                <th>CV</th>
 
-                                        </tr>
-                                        {currentJob.CVS.map(CV => (
-                                            <tr key={CV._id}>
-                                                <td>{CV.email}</td>
-                                                <td><a href={CV.cvLink}>Download CV</a></td>
                                             </tr>
-                                        ))}
+                                            {currentJob.CVS.map(CV => (
+                                                <tr key={CV._id}>
+                                                    <td>{CV.email}</td>
+                                                    <td><a href={CV.cvLink}>Download CV</a></td>
+                                                </tr>
+                                            ))}
+                                        </tbody>
+
                                     </table>}
 
                                 </div>

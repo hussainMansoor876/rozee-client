@@ -71,3 +71,26 @@ export const updateNewJob = data => {
         })
     }
 }
+
+export const removeNewJob = data => {
+    return dispatch => {
+        dispatch(JobActions.removeJob())
+        const { jobId } = data
+        axios.post(Path.REMOVE_JOB, {
+            jobId
+        }).then(response => {
+
+            console.log("remove job", response)
+
+            if (!response.data.success) {
+                return dispatch(JobActions.removeJobFail({ success: false, message: response.data.message }))
+            }
+
+            dispatch(JobActions.removeJobSuccess({ success: true, message: response.data.message }))
+
+
+        }).catch(err => {
+            dispatch(JobActions.removeJobFail({ success: false, message: "Something went wrong please try again later" }))
+        })
+    }
+}
