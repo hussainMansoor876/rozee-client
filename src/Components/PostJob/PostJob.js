@@ -42,8 +42,8 @@ class PostJob extends Component {
                 successMessage: nextProps.successMessage,
                 jobTitle: "",
                 rawHtml: "",
-                role: "",
-                location: "",
+                location: countries[0].name,
+                role: roles[0].position,
                 editorState: EditorState.createEmpty(),
                 location: "",
                 disabled: false
@@ -97,16 +97,15 @@ class PostJob extends Component {
                         <div className="post-form" >
                             <label htmlFor="jobTitle">Job Title</label>
                             <input value={jobTitle} onChange={this.handleChange} type="text" name="jobTitle" id="jobTitle" placeholder="Need a MERN Developer" />
-
+                            {/* Location */}
                             <label htmlFor="location">Location</label>
                             <select value={location} name="location" onChange={this.handleChange}>
                                 {countries.map((item, idx) => (
                                     <option value={item.name}>{item.name}</option>
                                 ))}
                             </select>
-
+                            {/* Role */}
                             <label htmlFor="role">Role</label>
-
                             <select value={role} name="role" onChange={this.handleChange}>
                                 {roles.map((item, idx) => (
                                     <option value={item.position}>{item.position}</option>
@@ -143,7 +142,6 @@ const mapStateToProps = (state) => {
         isError: state.jobs.isError,
         errorMessage: state.jobs.errorMessage,
         successMessage: state.jobs.successMessage,
-        // myJobs: state.jobs.myJobs,
 
     }
 }
