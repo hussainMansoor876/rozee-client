@@ -9,10 +9,12 @@ class Path {
     static GET_MY_JOBS = Path.BASE_URL + "/job/getPostedJobs"
 
     static POST_JOB = Path.BASE_URL + "/job/addNewJob"
-
+    
     static EDIT_JOB = Path.BASE_URL + "/job/edit"
 
     static REMOVE_JOB = Path.BASE_URL + "/job/removeJob"
+
+    static GET_CVS = Path.BASE_URL + "/cv/getall"
 
 }
 

@@ -11,6 +11,8 @@ class Navbar extends Component {
                     <li className="users"><Link to="/alljobs">All Jobs</Link></li>
                     <li className="write"><Link to="/postjob">Post Job</Link></li>
                     <li className="edit"><Link to="/editjob">Edit Job</Link></li>
+                    <li className="edit"><Link to="/allcvs">View All CVS</Link></li>
+
 
                 </ul>
             </nav>
