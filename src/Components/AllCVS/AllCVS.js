@@ -1,7 +1,4 @@
 import React, { Component } from 'react'
-import { Modal, Button } from 'antd'
-import { connect } from 'react-redux'
-import * as jobMiddleware from '../../Store/middlewares/jobMiddleware'
 import Axios from 'axios'
 import Path from '../../Config/Path'
 
@@ -52,7 +49,7 @@ class AllCVS extends Component {
                                 <th>Candidate Name</th>
                                 <th>CV</th>
                             </tr>
-
+                   
                             {allCVS.map((item, idx) => (
                                 <React.Fragment key={item._id} >
                                     <tr style={{ cursor: 'pointer' }}>
